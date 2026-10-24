@@ -1,0 +1,78 @@
+# Imports the latest bundles of every app in apps.txt into one signed
+# Flatpak repository and deploys it to GitHub Pages.
+name: Publish
+
+on:
+  repository_dispatch:
+    types: [app-updated]
+  schedule:
+    - cron: '17 4 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Flatpak tooling
+        run: |
+          apt=(sudo env DEBIAN_FRONTEND=noninteractive apt-get -o DPkg::Lock::Timeout=120)
+          "${apt[@]}" update -q
+          # build-update-repo renders the AppStream icons with gdk-pixbuf.
+          "${apt[@]}" install -y -q --no-install-recommends \
+            flatpak ostree librsvg2-common
+
+      - name: Import signing key
+        id: key
+        env:
+          FLATPAK_GPG_KEY: ${{ secrets.FLATPAK_GPG_KEY }}
+        run: |
+          if [ -z "$FLATPAK_GPG_KEY" ]; then
+            echo "::error::Secret FLATPAK_GPG_KEY is missing (see README.md)."
+            exit 1
+          fi
+          export GNUPGHOME="$RUNNER_TEMP/gnupg"
+          install -d -m 700 "$GNUPGHOME"
+          printf '%s\n' "$FLATPAK_GPG_KEY" | gpg --batch --import
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+          fpr=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr/ {print $10; exit}')
+          echo "id=$fpr" >> "$GITHUB_OUTPUT"
+
+      - id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Build site
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GPG_KEY_ID: ${{ steps.key.outputs.id }}
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
+        run: scripts/build-site.sh
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
