@@ -22,5 +22,11 @@ the last deploy reported its environment URL as `http://flatpak.nexumia.de/`
 (Pages had the custom domain but no HTTPS yet). Check the DNS record and
 the Pages settings first; see the README setup steps.
 
+On 2026-10-25 ~11:30 UTC, after the `flatpak` CNAME was added in
+Cloudflare (the zone that actually serves nexumia.de; the record in
+Infomaniak's zone editor had no effect), `flatpak.nexumia.de` reached
+GitHub Pages but still presented the `*.github.io` certificate until
+GitHub issued the custom-domain certificate.
+
 Building the site (`scripts/build-site.sh`) only needs GitHub release
 downloads, which work through `gh`.

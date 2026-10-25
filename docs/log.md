@@ -1,6 +1,7 @@
 # Directory Update Log
 
 ## 2026-10-25
+* **Update**: README and [dev environment](dev-environment.md): nexumia.de DNS is served by Cloudflare, Infomaniak is only the registrar; the `flatpak` CNAME belongs in Cloudflare (DNS only). With it, the host reaches GitHub Pages; HTTPS waits for GitHub's certificate.
 * **Update**: Dependabot keeps the GitHub Actions in `publish.yml` current. The apps' CI now also releases source bundles (`<bundle>-sources-<arch>.flatpak`), which `build-site.sh` imports like the app bundles, so the repository serves `runtime/<app id>.Sources` (see the toolkit's [licensing](../../phosh-toolkit/docs/licensing.md)). [Dev environment](dev-environment.md): `flatpak.nexumia.de` answered `502` after being allowed; the deploy URL was still `http://`.
 * **Update**: `apps.txt` lists `suitably/cirro`, where the Wetterblick code moved.
 * **Creation**: [Dev environment hosts](dev-environment.md): `flatpak.nexumia.de` and `suitably.github.io` are blocked in the cloud environment.
