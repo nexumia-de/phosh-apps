@@ -36,7 +36,10 @@ Details: [phosh-toolkit/docs/app-repository.md](https://github.com/suitably/phos
 1. **Pages**: Settings → Pages → Source: *GitHub Actions*; Custom
    domain: `flatpak.nexumia.de`, then *Enforce HTTPS*. DNS at the
    nexumia.de provider: `flatpak  CNAME  <owner>.github.io.` (the owner of
-   this repository). Also verify `nexumia.de` in the account or
+   this repository). This is a plain DNS record, not a reverse-proxy
+   route (e.g. Pangolin): GitHub must see its own IP to issue the HTTPS
+   certificate. A specific `flatpak` record wins over a wildcard
+   `*.nexumia.de` that points to a proxy. Also verify `nexumia.de` in the account or
    organization settings (Pages → Add a domain, a DNS TXT record) so no
    other GitHub account can claim the subdomain.
    The workflow takes the site URL from Pages, so the published remote
