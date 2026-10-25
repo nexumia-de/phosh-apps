@@ -17,6 +17,8 @@ SITE_URL=${SITE_URL%/}
 REMOTE=nexumia
 TITLE="nexumia Phosh apps"
 FLATHUB=https://dl.flathub.org/repo/flathub.flatpakrepo
+# Voluntary support (phosh-toolkit docs/support.md).
+SUPPORT_URL=https://liberapay.com/suitably
 
 root=$(cd "$(dirname "$0")/.." && pwd)
 bundles=${1:-}
@@ -106,6 +108,8 @@ Apps use the GNOME runtime from Flathub.</p>
 <ul>$rows</ul>
 <pre>flatpak remote-add --user --if-not-exists flathub $FLATHUB
 flatpak remote-add --user --if-not-exists $REMOTE $SITE_URL/$REMOTE.flatpakrepo</pre>
+<p>The apps are free for everyone. If you want to support their
+development, you can do so on <a href="$SUPPORT_URL">Liberapay</a>.</p>
 </body></html>
 EOR
 echo "Site in $out"
