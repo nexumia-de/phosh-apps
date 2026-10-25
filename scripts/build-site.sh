@@ -2,7 +2,7 @@
 # Builds the static Flatpak repository site from the latest bundles of every
 # app in apps.txt.
 #
-#   SITE_URL=https://suitably.github.io/phosh-apps GPG_KEY_ID=<fingerprint> \
+#   SITE_URL=https://flatpak.nexumia.de GPG_KEY_ID=<fingerprint> \
 #     scripts/build-site.sh [bundle-dir] [out-dir]
 #
 # Without a bundle-dir argument the bundles are downloaded with gh from each
@@ -11,8 +11,8 @@ set -euo pipefail
 
 : "${SITE_URL:?set SITE_URL}" "${GPG_KEY_ID:?set GPG_KEY_ID}"
 SITE_URL=${SITE_URL%/}
-REMOTE=suitably
-TITLE="suitably Phosh apps"
+REMOTE=nexumia
+TITLE="nexumia Phosh apps"
 FLATHUB=https://dl.flathub.org/repo/flathub.flatpakrepo
 
 root=$(cd "$(dirname "$0")/.." && pwd)
@@ -52,7 +52,7 @@ cat > "$out/$REMOTE.flatpakrepo" <<EOR
 Title=$TITLE
 Url=$SITE_URL/repo/
 Homepage=$SITE_URL/
-Comment=Phosh apps by suitably
+Comment=Phosh apps from nexumia.de
 GPGKey=$gpgkey
 EOR
 
