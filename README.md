@@ -34,9 +34,11 @@ Details: [phosh-toolkit/docs/app-repository.md](https://github.com/suitably/phos
 ## One-time setup
 
 1. **Pages**: Settings → Pages → Source: *GitHub Actions*; Custom
-   domain: `flatpak.nexumia.de`, then *Enforce HTTPS*. DNS at the
-   nexumia.de provider: `flatpak  CNAME  <owner>.github.io.` (the owner of
-   this repository). This is a plain DNS record, not a reverse-proxy
+   domain: `flatpak.nexumia.de`, then *Enforce HTTPS*. DNS for
+   nexumia.de is served by **Cloudflare** (Infomaniak is only the
+   registrar and shows "external DNS zone"; records in its zone editor
+   are ignored). In Cloudflare: `flatpak  CNAME  <owner>.github.io.`
+   (the owner of this repository), proxy status **DNS only**. This is a plain DNS record, not a reverse-proxy
    route (e.g. Pangolin): GitHub must see its own IP to issue the HTTPS
    certificate. A specific `flatpak` record wins over a wildcard
    `*.nexumia.de` that points to a proxy. Also verify `nexumia.de` in the account or
