@@ -1,4 +1,4 @@
 # GitHub repositories whose rolling release "latest" is published.
 # One owner/repo per line; each must build with the phosh-toolkit Flatpak
 # workflow and "release: true".
-suitably/Cirro
+suitably/cirro
