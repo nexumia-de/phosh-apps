@@ -1,6 +1,7 @@
 # Directory Update Log
 
 ## 2026-10-25
+* **Creation**: [Dev environment hosts](dev-environment.md): `flatpak.nexumia.de` and `suitably.github.io` are blocked in the cloud environment.
 * **Update**: Repository served at the custom domain `https://flatpak.nexumia.de/`, remote and file renamed to `nexumia` / `nexumia.flatpakrepo` (see the toolkit decision [domain-based names](../../phosh-toolkit/docs/decisions/domain-names.md)). README lists the DNS and Pages custom-domain setup; the `flatpak` record must be plain DNS (not a reverse-proxy route such as Pangolin) and overrides a wildcard.
 
 ## 2026-10-24
