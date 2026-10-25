@@ -21,10 +21,14 @@ After that every app shows up in GNOME Software and updates arrive there.
 
 1. An app repository builds with the
    [phosh-toolkit Flatpak workflow](https://github.com/suitably/phosh-toolkit/blob/main/docs/flatpak-workflow.md)
-   and `release: true`; every push to `main` attaches the x86_64 and
-   aarch64 bundles to its rolling release `latest`.
-2. `.github/workflows/publish.yml` downloads the bundles of every
-   repository in [apps.txt](apps.txt), imports them into a signed
+   and `release: true` (plus `nightly: true`): a tag `v<version>`
+   attaches the x86_64 and aarch64 bundles to its GitHub Release (the
+   stable app), every push to `main` replaces those of the pre-release
+   `nightly` (the app `<app id>.Devel`, e.g. "Cirro (Nightly)"). See
+   [release channels](https://github.com/suitably/phosh-toolkit/blob/main/docs/flatpak-workflow.md#release-channels).
+2. `.github/workflows/publish.yml` downloads, for every repository in
+   [apps.txt](apps.txt), the bundles of its newest non-pre-release
+   release and, if present, of `nightly`, imports them into a signed
    repository (`scripts/build-site.sh`) and deploys it to Pages. It runs
    when an app notifies it, daily at 04:17 UTC, on pushes here and by
    hand.
@@ -71,4 +75,6 @@ Details: [phosh-toolkit/docs/app-repository.md](https://github.com/suitably/phos
 1. In the app repository's Flatpak workflow, pass `release: true` and
    `publish-repo: suitably/phosh-apps` and give the job
    `permissions: { contents: write }` (see the toolkit docs).
-2. Add `owner/repo` to [apps.txt](apps.txt).
+2. Push its first tag `v<version>`, then add `owner/repo` to
+   [apps.txt](apps.txt); a listed app without a stable release fails
+   the publish run.

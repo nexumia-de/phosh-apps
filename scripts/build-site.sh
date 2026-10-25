@@ -6,7 +6,10 @@
 #     scripts/build-site.sh [bundle-dir] [out-dir]
 #
 # Without a bundle-dir argument the bundles are downloaded with gh from each
-# app's release "latest". GNUPGHOME must hold the secret signing key.
+# app: the stable app from its newest tagged release (GitHub's "latest
+# release", never a pre-release) and, if present, the nightly app
+# <app id>.Devel from the pre-release "nightly". GNUPGHOME must hold the
+# secret signing key.
 set -euo pipefail
 
 : "${SITE_URL:?set SITE_URL}" "${GPG_KEY_ID:?set GPG_KEY_ID}"
@@ -22,9 +25,14 @@ out=${2:-$root/_site}
 if [[ -z $bundles ]]; then
   bundles=$(mktemp -d)
   grep -Ev '^\s*(#|$)' "$root/apps.txt" | while read -r app; do
-    # A listed app without bundles fails the run instead of silently
-    # disappearing from the repository.
-    gh release download latest --repo "$app" --pattern '*.flatpak' --dir "$bundles/${app//\//_}"
+    dir=$bundles/${app//\//_}
+    # A listed app without a stable release fails the run instead of
+    # silently disappearing from the repository.
+    gh release download --repo "$app" --pattern '*.flatpak' --dir "$dir/stable" ||
+      { echo "$app has no stable release (a tag v<version>)" >&2; exit 1; }
+    if gh release view nightly --repo "$app" >/dev/null 2>&1; then
+      gh release download nightly --repo "$app" --pattern '*.flatpak' --dir "$dir/nightly"
+    fi
   done
 fi
 
