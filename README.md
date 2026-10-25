@@ -61,6 +61,10 @@ Details: [phosh-toolkit/docs/app-repository.md](https://github.com/suitably/phos
    *Contents: read and write* on `suitably/phosh-apps` and store it as
    secret `PUBLISH_TOKEN` in each app repository. Without it, new builds
    appear after the daily run (or start *Publish* by hand).
+4. **Branch protection**: Settings → Rules → Rulesets → *Import a
+   ruleset* with [.github/rulesets/main.json](.github/rulesets/main.json)
+   (no required checks: no workflow runs on pull requests). See the
+   toolkit's [branch protection](https://github.com/suitably/phosh-toolkit/blob/main/docs/branch-protection.md).
 
 ## Add an app
 
