@@ -9,3 +9,7 @@ okf_version: "0.2"
 repository is toolkit-wide knowledge and lives in
 [../../phosh-toolkit/docs/app-repository.md](../../phosh-toolkit/docs/app-repository.md).
 Change history is in [log.md](log.md).
+
+# Concepts
+
+* [Dev environment hosts](dev-environment.md) - Hosts the cloud environment must allow to check the published repository.
