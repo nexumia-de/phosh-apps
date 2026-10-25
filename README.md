@@ -20,12 +20,12 @@ After that every app shows up in GNOME Software and updates arrive there.
 ## How it works
 
 1. An app repository builds with the
-   [phosh-toolkit Flatpak workflow](https://github.com/suitably/phosh-toolkit/blob/main/docs/flatpak-workflow.md)
+   [phosh-toolkit Flatpak workflow](https://github.com/nexumia-de/phosh-toolkit/blob/main/docs/flatpak-workflow.md)
    and `release: true` (plus `nightly: true`): a tag `v<version>`
    attaches the x86_64 and aarch64 bundles to its GitHub Release (the
    stable app), every push to `main` replaces those of the pre-release
    `nightly` (the app `<app id>.Devel`, e.g. "Cirro (Nightly)"). See
-   [release channels](https://github.com/suitably/phosh-toolkit/blob/main/docs/flatpak-workflow.md#release-channels).
+   [release channels](https://github.com/nexumia-de/phosh-toolkit/blob/main/docs/flatpak-workflow.md#release-channels).
 2. `.github/workflows/publish.yml` downloads, for every repository in
    [apps.txt](apps.txt), the bundles of its newest non-pre-release
    release and, if present, of `nightly`, imports them into a signed
@@ -33,7 +33,7 @@ After that every app shows up in GNOME Software and updates arrive there.
    when an app notifies it, daily at 04:17 UTC, on pushes here and by
    hand.
 
-Details: [phosh-toolkit/docs/app-repository.md](https://github.com/suitably/phosh-toolkit/blob/main/docs/app-repository.md).
+Details: [phosh-toolkit/docs/app-repository.md](https://github.com/nexumia-de/phosh-toolkit/blob/main/docs/app-repository.md).
 
 ## One-time setup
 
@@ -55,25 +55,25 @@ Details: [phosh-toolkit/docs/app-repository.md](https://github.com/suitably/phos
    ```sh
    export GNUPGHOME=$(mktemp -d)
    gpg --batch --passphrase '' --quick-gen-key 'nexumia Phosh apps' ed25519 sign never
-   gpg --armor --export-secret-keys | gh secret set FLATPAK_GPG_KEY --repo suitably/phosh-apps
+   gpg --armor --export-secret-keys | gh secret set FLATPAK_GPG_KEY --repo nexumia-de/phosh-apps
    gpg --armor --export-secret-keys > phosh-apps-signing-key.asc   # back it up safely
    ```
 
    Keep the backup: with a new key, every phone has to remove and re-add
    the repository.
 3. **Optional, instant publishing**: create a fine-grained token with
-   *Contents: read and write* on `suitably/phosh-apps` and store it as
+   *Contents: read and write* on `nexumia-de/phosh-apps` and store it as
    secret `PUBLISH_TOKEN` in each app repository. Without it, new builds
    appear after the daily run (or start *Publish* by hand).
 4. **Branch protection**: Settings → Rules → Rulesets → *Import a
    ruleset* with [.github/rulesets/main.json](.github/rulesets/main.json)
    (no required checks: no workflow runs on pull requests). See the
-   toolkit's [branch protection](https://github.com/suitably/phosh-toolkit/blob/main/docs/branch-protection.md).
+   toolkit's [branch protection](https://github.com/nexumia-de/phosh-toolkit/blob/main/docs/branch-protection.md).
 
 ## Add an app
 
 1. In the app repository's Flatpak workflow, pass `release: true` and
-   `publish-repo: suitably/phosh-apps` and give the job
+   `publish-repo: nexumia-de/phosh-apps` and give the job
    `permissions: { contents: write }` (see the toolkit docs).
 2. Push its first tag `v<version>`, then add `owner/repo` to
    [apps.txt](apps.txt); a listed app without a stable release fails
