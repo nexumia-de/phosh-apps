@@ -1,4 +1,6 @@
 # GitHub repositories whose rolling release "latest" is published.
 # One owner/repo per line; each must build with the phosh-toolkit Flatpak
-# workflow and "release: true".
+# workflow and "release: true". "owner/repo <tag>" publishes the bundles of
+# release <tag> instead.
 nexumia-de/cirro
+nexumia-de/android_translation_layer engine

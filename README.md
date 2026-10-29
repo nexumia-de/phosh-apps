@@ -28,7 +28,8 @@ After that every app shows up in GNOME Software and updates arrive there.
    [release channels](https://github.com/nexumia-de/phosh-toolkit/blob/main/docs/flatpak-workflow.md#release-channels).
 2. `.github/workflows/publish.yml` downloads, for every repository in
    [apps.txt](apps.txt), the bundles of its newest non-pre-release
-   release and, if present, of `nightly`, imports them into a signed
+   release and, if present, of `nightly` (or, for a line
+   `owner/repo <tag>`, of release `<tag>`: the ATL engine), imports them into a signed
    repository (`scripts/build-site.sh`) and deploys it to Pages. It runs
    when an app notifies it, daily at 04:17 UTC, on pushes here and by
    hand.

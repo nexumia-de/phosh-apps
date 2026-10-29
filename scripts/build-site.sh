@@ -8,8 +8,10 @@
 # Without a bundle-dir argument the bundles are downloaded with gh from each
 # app: the stable app from its newest tagged release (GitHub's "latest
 # release", never a pre-release) and, if present, the nightly app
-# <app id>.Devel from the pre-release "nightly". GNUPGHOME must hold the
-# secret signing key.
+# <app id>.Devel from the pre-release "nightly". A line "owner/repo <tag>"
+# in apps.txt takes the bundles of that release instead (the ATL engine,
+# a base app for app Flatpaks generated on the phone). GNUPGHOME must hold
+# the secret signing key.
 set -euo pipefail
 
 : "${SITE_URL:?set SITE_URL}" "${GPG_KEY_ID:?set GPG_KEY_ID}"
@@ -26,8 +28,13 @@ out=${2:-$root/_site}
 
 if [[ -z $bundles ]]; then
   bundles=$(mktemp -d)
-  grep -Ev '^\s*(#|$)' "$root/apps.txt" | while read -r app; do
+  grep -Ev '^\s*(#|$)' "$root/apps.txt" | while read -r app tag; do
     dir=$bundles/${app//\//_}
+    if [[ -n $tag ]]; then
+      gh release download "$tag" --repo "$app" --pattern '*.flatpak' --dir "$dir/$tag" ||
+        { echo "$app has no release $tag" >&2; exit 1; }
+      continue
+    fi
     # A listed app without a stable release fails the run instead of
     # silently disappearing from the repository.
     gh release download --repo "$app" --pattern '*.flatpak' --dir "$dir/stable" ||
@@ -72,7 +79,10 @@ apps=$(ostree refs --repo="$out/repo" | sed -n 's|^app/\([^/]*\)/.*|\1|p' | sort
 rows=""
 for id in $apps; do
   ref=$(ostree refs --repo="$out/repo" | grep -m1 "^app/$id/")
-  meta=$(ostree cat --repo="$out/repo" "$ref" "/files/share/metainfo/$id.metainfo.xml")
+  # Base apps without metainfo (the ATL engine) are installed by id, not
+  # from the page or GNOME Software.
+  meta=$(ostree cat --repo="$out/repo" "$ref" "/files/share/metainfo/$id.metainfo.xml" 2>/dev/null) ||
+    { echo "$id has no metainfo; not listed on the page"; continue; }
   IFS=$'\x1f' read -r name summary <<<"$(python3 -c '
 import html, sys, xml.etree.ElementTree as ET
 r = ET.fromstring(sys.stdin.read())

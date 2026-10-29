@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-10-29
+* **ATL engine**: `apps.txt` takes an optional release tag per line; `nexumia-de/android_translation_layer engine` publishes the ATL engine Flatpak (`de.nexumia.atl.BaseApp`), a base app for Android app Flatpaks generated on the phone. Apps without metainfo stay off the page. Tested locally with the engine and Cirro's aarch64 bundles.
+
 ## 2026-10-25
 * **Update**: `apps.txt` lists `nexumia-de/cirro` (the current owner; `suitably/cirro` only worked through GitHub's redirect); README links and commands name `nexumia-de`. The actions in `publish.yml` are pinned to commit SHAs with the version as comment (toolkit [dependency updates](../../phosh-toolkit/docs/dependency-updates.md)).
 * **Update**: The site's index page links the support page on Liberapay, and `.github/FUNDING.yml` lists it (toolkit [support for development](../../phosh-toolkit/docs/support.md)).
