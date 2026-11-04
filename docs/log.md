@@ -1,6 +1,7 @@
 # Directory Update Log
 
 ## 2026-11-04
+* **Nuntius**: `nexumia-de/nuntius rolling` publishes Nuntius (`de.nexumia.Nuntius`, a Matrix chat app forked from Fractal) from its rolling release `rolling`, which every push to its `phosh` branch replaces. It does not use phosh-toolkit's Flatpak workflow yet (nexumia-de/nuntius#3), so there is no stable tag release.
 * **Update**: `apps.txt` lists `nexumia-de/nauta`, the Navidrome client; its first release `v0.1.0` and the nightly app `de.nexumia.Nauta.Devel` are published with the others.
 
 ## 2026-10-29
