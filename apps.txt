@@ -5,3 +5,4 @@
 nexumia-de/cirro
 nexumia-de/android_translation_layer engine
 nexumia-de/ephyra
+nexumia-de/nauta
