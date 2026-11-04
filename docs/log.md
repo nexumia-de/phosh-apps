@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-04
+* **Update**: `apps.txt` lists `nexumia-de/nauta`, the Navidrome client; its first release `v0.1.0` and the nightly app `de.nexumia.Nauta.Devel` are published with the others.
+
 ## 2026-10-29
 * **ATL engine**: `apps.txt` takes an optional release tag per line; `nexumia-de/android_translation_layer engine` publishes the ATL engine Flatpak (`de.nexumia.atl.BaseApp`), a base app for Android app Flatpaks generated on the phone. Apps without metainfo stay off the page. Tested locally with the engine and Cirro's aarch64 bundles.
 
