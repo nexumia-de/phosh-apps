@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-05
+* **Update**: `apps.txt` lists `nexumia-de/pensum`, tasks and time tracking in Super Productivity's backup format; its first release `v0.1.0` is published with the others; the nightly app `de.nexumia.Pensum.Devel` follows once its pre-release `nightly` exists (none yet on 2026-11-05).
+
 ## 2026-11-04
 * **Update**: `apps.txt` lists `nexumia-de/pulsus`, the viewer for the health data Amazfish downloads from the watch; its first release `v0.1.0` and the nightly app `de.nexumia.Pulsus.Devel` are published with the others.
 * **Nuntius**: `nexumia-de/nuntius rolling` publishes Nuntius (`de.nexumia.Nuntius`, a Matrix chat app forked from Fractal) from its rolling release `rolling`, which every push to its `phosh` branch replaces. It does not use phosh-toolkit's Flatpak workflow yet (nexumia-de/nuntius#3), so there is no stable tag release.

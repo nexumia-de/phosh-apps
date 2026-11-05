@@ -8,3 +8,4 @@ nexumia-de/ephyra
 nexumia-de/nauta
 nexumia-de/nuntius rolling
 nexumia-de/pulsus
+nexumia-de/pensum
