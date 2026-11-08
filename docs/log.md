@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-08
+* **Update**: `AGENTS.md` imports only `agents/core.md` from phosh-toolkit instead of its whole `AGENTS.md`, so the GTK app rules and the list of rules that do not apply are gone (toolkit decision "lean agent rules", to use fewer tokens per session).
+
 ## 2026-11-05
 * **Update**: `apps.txt` lists `nexumia-de/pensum`, tasks and time tracking in Super Productivity's backup format; its first release `v0.1.0` is published with the others; the nightly app `de.nexumia.Pensum.Devel` follows once its pre-release `nightly` exists (none yet on 2026-11-05).
 
