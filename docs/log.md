@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-16
+* **Fix**: The comment at the top of `apps.txt` still described the rolling release `latest`; it now names the stable tag release and the `nightly` pre-release that `build-site.sh` reads.
+
 ## 2026-11-08
 * **Update**: `AGENTS.md` imports only `agents/core.md` from phosh-toolkit instead of its whole `AGENTS.md`, so the GTK app rules and the list of rules that do not apply are gone (toolkit decision "lean agent rules", to use fewer tokens per session).
 
