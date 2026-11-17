@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-17
+* **Update**: `apps.txt` lists `nexumia-de/vestigia`, the location history app for Dawarich (visible name Travel Log); its first release `v0.1.0` and the nightly app `de.nexumia.Vestigia.Devel` are published with the others.
+
 ## 2026-11-16
 * **Fix**: The comment at the top of `apps.txt` still described the rolling release `latest`; it now names the stable tag release and the `nightly` pre-release that `build-site.sh` reads.
 

@@ -11,3 +11,4 @@ nexumia-de/nauta
 nexumia-de/nuntius rolling
 nexumia-de/pulsus
 nexumia-de/pensum
+nexumia-de/vestigia
