@@ -30,7 +30,10 @@ After that every app shows up in GNOME Software and updates arrive there.
    [apps.txt](apps.txt), the bundles of its newest non-pre-release
    release and, if present, of `nightly` (or, for a line
    `owner/repo <tag>`, of release `<tag>`: the ATL engine), imports them into a signed
-   repository (`scripts/build-site.sh`) and deploys it to Pages. It runs
+   repository (`scripts/build-site.sh`) and deploys it to Pages. The run
+   fails, naming the app, if a stable release does not bring the stable
+   app (not only `.Devel` or the sources) for both x86_64 and aarch64,
+   or a release `<tag>` brings no app at all. It runs
    when an app notifies it, daily at 04:17 UTC, on pushes here and by
    hand.
 

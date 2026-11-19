@@ -3,7 +3,8 @@
 # workflow and "release: true". Published are the stable app from the
 # newest tag release v<version> and, if present, <app id>.Devel from the
 # pre-release "nightly". "owner/repo <tag>" publishes the bundles of
-# release <tag> instead.
+# release <tag> instead. A stable release without the stable app for
+# x86_64 and aarch64 fails the publish run.
 nexumia-de/cirro
 nexumia-de/android_translation_layer engine
 nexumia-de/ephyra

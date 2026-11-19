@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-19
+* **Update**: `build-site.sh` fails the publish run, naming the app, if a stable release does not bring the stable app (not only `.Devel` or the source bundles) for every architecture in `STABLE_ARCHES` (x86_64 and aarch64), or a release `<tag>` from `apps.txt` brings no app. Before, such a release was published silently and the phone saw only the nightly app. Tested locally with generated bundles and a stand-in `gh`.
+
 ## 2026-11-17
 * **Update**: `apps.txt` lists `nexumia-de/vestigia`, the location history app for Dawarich (visible name Travel Log); its first release `v0.1.0` and the nightly app `de.nexumia.Vestigia.Devel` are published with the others.
 
