@@ -10,8 +10,10 @@
 # release", never a pre-release) and, if present, the nightly app
 # <app id>.Devel from the pre-release "nightly". A line "owner/repo <tag>"
 # in apps.txt takes the bundles of that release instead (the ATL engine,
-# a base app for app Flatpaks generated on the phone). GNUPGHOME must hold
-# the secret signing key.
+# a base app for app Flatpaks generated on the phone). The run fails if a
+# stable release lacks the stable app (not only .Devel or the sources) for
+# an architecture in STABLE_ARCHES. GNUPGHOME must hold the secret signing
+# key.
 set -euo pipefail
 
 : "${SITE_URL:?set SITE_URL}" "${GPG_KEY_ID:?set GPG_KEY_ID}"
@@ -21,6 +23,8 @@ TITLE="nexumia Phosh apps"
 FLATHUB=https://dl.flathub.org/repo/flathub.flatpakrepo
 # Voluntary support (phosh-toolkit docs/support.md).
 SUPPORT_URL=https://liberapay.com/suitably
+# Architectures every stable app must be published for.
+STABLE_ARCHES=${STABLE_ARCHES:-x86_64 aarch64}
 
 root=$(cd "$(dirname "$0")/.." && pwd)
 bundles=${1:-}
@@ -54,12 +58,39 @@ sign=(--gpg-sign="$GPG_KEY_ID")
 shopt -s nullglob globstar
 files=("$bundles"/**/*.flatpak)
 (( ${#files[@]} )) || { echo "no bundles found in $bundles" >&2; exit 1; }
+declare -A added # bundle directory -> the refs its bundles added
 for f in "${files[@]}"; do
   echo "Importing $f"
+  before=$(ostree refs --repo="$out/repo" | sort)
   # Keeps the bundle's commit id, so re-publishing an unchanged app does
   # not show up as an update on the phone.
   flatpak build-import-bundle "${sign[@]}" "$out/repo" "$f"
+  added[$(dirname "$f")]+=$(comm -13 <(echo "$before") <(ostree refs --repo="$out/repo" | sort))$'\n'
 done
+
+# Every downloaded app must bring its stable app, not only .Devel or the
+# sources: the stable release on every architecture in STABLE_ARCHES, a
+# release <tag> on at least one.
+if [[ -z ${1:-} ]]; then
+  missing=()
+  for dir in "$bundles"/*/*/; do
+    dir=${dir%/} channel=${dir##*/} app=${dir%/*}
+    app=${app##*/} app=${app/_//}
+    [[ $channel == nightly ]] && continue
+    refs=$(grep -E '^app/[^/]+/' <<<"${added[$dir]:-}" | grep -Ev '^app/[^/]+\.Devel/' || true)
+    if [[ $channel == stable ]]; then
+      for arch in $STABLE_ARCHES; do
+        grep -q "^app/[^/]*/$arch/" <<<"$refs" || missing+=("$app: no stable app for $arch")
+      done
+    elif [[ -z $refs ]]; then
+      missing+=("$app: no app in release $channel")
+    fi
+  done
+  if (( ${#missing[@]} )); then
+    printf '::error::%s\n' "${missing[@]}" >&2
+    exit 1
+  fi
+fi
 flatpak build-update-repo "${sign[@]}" --title="$TITLE" \
   --default-branch=master --prune "$out/repo"
 
