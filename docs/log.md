@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-21
+* **Update**: `apps.txt` takes a line `owner/repo <prefix>v*` for one app of a repository with several apps (the domus repository holds Emptio, Mixtura and Culina): the stable app comes from the newest release whose tag matches, the nightly app from the pre-release `<prefix>nightly`. `suitably/domus emptio-v*` publishes Emptio (Shopping List). Tested locally with a stand-in `gh`: the newest matching tag is taken, two apps of one repository download into separate folders, a pattern without a release and a pattern not ending in `v*` fail the run. No real publish run tested it.
+
 ## 2026-11-19
 * **Update**: `build-site.sh` fails the publish run, naming the app, if a stable release does not bring the stable app (not only `.Devel` or the source bundles) for every architecture in `STABLE_ARCHES` (x86_64 and aarch64), or a release `<tag>` from `apps.txt` brings no app. Before, such a release was published silently and the phone saw only the nightly app. Tested locally with generated bundles and a stand-in `gh`.
 

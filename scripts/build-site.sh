@@ -10,7 +10,10 @@
 # release", never a pre-release) and, if present, the nightly app
 # <app id>.Devel from the pre-release "nightly". A line "owner/repo <tag>"
 # in apps.txt takes the bundles of that release instead (the ATL engine,
-# a base app for app Flatpaks generated on the phone). The run fails if a
+# a base app for app Flatpaks generated on the phone). A line
+# "owner/repo <prefix>v*" is one app of a repository with several (domus):
+# the stable app from the newest release whose tag matches, the nightly app
+# from the pre-release "<prefix>nightly". The run fails if a
 # stable release lacks the stable app (not only .Devel or the sources) for
 # an architecture in STABLE_ARCHES. GNUPGHOME must hold the secret signing
 # key.
@@ -34,6 +37,22 @@ if [[ -z $bundles ]]; then
   bundles=$(mktemp -d)
   grep -Ev '^\s*(#|$)' "$root/apps.txt" | while read -r app tag; do
     dir=$bundles/${app//\//_}
+    if [[ $tag == *'*'* ]]; then
+      prefix=${tag%v\*}
+      [[ $tag == "${prefix}v*" && -n $prefix ]] ||
+        { echo "$app: a tag pattern must be <prefix>v*, got $tag" >&2; exit 1; }
+      dir+=_${prefix%-}
+      stable=$(gh release list --repo "$app" --exclude-drafts --exclude-pre-releases \
+        --limit 100 --json tagName,publishedAt \
+        --jq 'sort_by(.publishedAt) | reverse | .[].tagName' |
+        while read -r t; do [[ $t == $tag ]] && { echo "$t"; break; }; done || true)
+      [[ -n $stable ]] || { echo "$app has no stable release $tag" >&2; exit 1; }
+      gh release download "$stable" --repo "$app" --pattern '*.flatpak' --dir "$dir/stable"
+      if gh release view "${prefix}nightly" --repo "$app" >/dev/null 2>&1; then
+        gh release download "${prefix}nightly" --repo "$app" --pattern '*.flatpak' --dir "$dir/nightly"
+      fi
+      continue
+    fi
     if [[ -n $tag ]]; then
       gh release download "$tag" --repo "$app" --pattern '*.flatpak' --dir "$dir/$tag" ||
         { echo "$app has no release $tag" >&2; exit 1; }

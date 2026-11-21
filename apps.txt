@@ -3,7 +3,10 @@
 # workflow and "release: true". Published are the stable app from the
 # newest tag release v<version> and, if present, <app id>.Devel from the
 # pre-release "nightly". "owner/repo <tag>" publishes the bundles of
-# release <tag> instead. A stable release without the stable app for
+# release <tag> instead. "owner/repo <prefix>v*" is one app of a repository
+# with several: the stable app from the newest release whose tag matches
+# (e.g. emptio-v0.1.0), the nightly app from the pre-release
+# "<prefix>nightly" (e.g. emptio-nightly). A stable release without the stable app for
 # x86_64 and aarch64 fails the publish run.
 nexumia-de/cirro
 nexumia-de/android_translation_layer engine
@@ -13,3 +16,4 @@ nexumia-de/nuntius rolling
 nexumia-de/pulsus
 nexumia-de/pensum
 nexumia-de/vestigia
+suitably/domus emptio-v*
