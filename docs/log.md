@@ -1,6 +1,7 @@
 # Directory Update Log
 
 ## 2026-11-21
+* **Update**: `apps.txt` lists `suitably/domus mixtura-v*` (Drink Builder) and `suitably/domus culina-v*` (Cook's Notebook), after their first releases `mixtura-v0.1.0` and `culina-v0.1.0`. The Emptio line works in real publish runs since suitably/domus became public (a private repository's releases cannot be read with this repository's token).
 * **Update**: `apps.txt` takes a line `owner/repo <prefix>v*` for one app of a repository with several apps (the domus repository holds Emptio, Mixtura and Culina): the stable app comes from the newest release whose tag matches, the nightly app from the pre-release `<prefix>nightly`. `suitably/domus emptio-v*` publishes Emptio (Shopping List). Tested locally with a stand-in `gh`: the newest matching tag is taken, two apps of one repository download into separate folders, a pattern without a release and a pattern not ending in `v*` fail the run. No real publish run tested it.
 
 ## 2026-11-19
