@@ -17,3 +17,5 @@ nexumia-de/pulsus
 nexumia-de/pensum
 nexumia-de/vestigia
 suitably/domus emptio-v*
+suitably/domus mixtura-v*
+suitably/domus culina-v*
