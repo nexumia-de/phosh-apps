@@ -16,6 +16,6 @@ nexumia-de/nuntius
 nexumia-de/pulsus
 nexumia-de/pensum
 nexumia-de/vestigia
-suitably/domus emptio-v*
-suitably/domus mixtura-v*
-suitably/domus culina-v*
+nexumia-de/domus emptio-v*
+nexumia-de/domus mixtura-v*
+nexumia-de/domus culina-v*

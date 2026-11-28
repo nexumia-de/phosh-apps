@@ -32,7 +32,7 @@ After that every app shows up in GNOME Software and updates arrive there.
    `owner/repo <tag>`, of release `<tag>`: the ATL engine; for a line
    `owner/repo <prefix>v*`, of the newest release whose tag matches and of
    the pre-release `<prefix>nightly`: one app of a repository with several,
-   e.g. `suitably/domus emptio-v*`), imports them into a signed
+   e.g. `nexumia-de/domus emptio-v*`), imports them into a signed
    repository (`scripts/build-site.sh`) and deploys it to Pages. The run
    fails, naming the app, if a stable release does not bring the stable
    app (not only `.Devel` or the sources) for both x86_64 and aarch64,

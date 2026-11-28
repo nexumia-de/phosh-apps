@@ -1,5 +1,8 @@
 # Directory Update Log
 
+## 2026-11-28
+* **Update**: `apps.txt` reads Emptio, Mixtura and Culina from `nexumia-de/domus`, where the domus repository moved (domus `docs/move-to-nexumia-de.md`). Its five releases (`emptio-v0.1.0`, `emptio-v0.2.0`, `emptio-v0.2.1`, `mixtura-v0.1.0`, `culina-v0.1.0`) were copied there with their files in the original order, so the newest matching release is the same as before until the next release of each app.
+
 ## 2026-11-22
 * **Update**: `apps.txt` lists `nexumia-de/nuntius` without a tag: its first stable release `v0.2.0` carries the stable app for x86_64 and aarch64, so the stable app now comes from the newest tag release instead of the rolling release `rolling`.
 
